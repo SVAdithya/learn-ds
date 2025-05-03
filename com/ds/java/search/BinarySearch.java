@@ -1,11 +1,22 @@
 package com.ds.java.search;
+/*
 
-//
+|----------------------------|       // full range: 1 to 40
+|-----------|                ✓       // first half selected: 1 to 20
+|----|                   ✓       // further half: 1 to 10
+  |--|              ✓       // narrowing: 1, 5, 10
+        5   8   10       ○       // mid points to 8 (target found)
+*/
+
+import com.ds.java.ArrayUtil;
+
 // SORTED ARRAY SEARCH
 public class BinarySearch {
     public static void main(String[] args) {
-        int a[] = { -7,  5, 6, 8, 10, 14, 17, 21, 28, 33, 39, 400, 2323, 2649};
+        int[] a = ArrayUtil.sortedArray;
+        System.out.println(System.currentTimeMillis() + " - Binary Search");
         int res = binarySearch(a, -7, 0, a.length - 1);
+        System.out.println(System.currentTimeMillis() + " - Binary Search End");
         if(res == -1)
             System.out.println("Not Found");
         else
