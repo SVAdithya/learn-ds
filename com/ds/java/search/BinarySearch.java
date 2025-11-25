@@ -10,9 +10,17 @@ package com.ds.java.search;
 
 import com.ds.java.ArrayUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // SORTED ARRAY SEARCH
 public class BinarySearch {
     public static void main(String[] args) {
+
+        List<Integer> aa = new ArrayList<>();
+        aa.add(121);
+        aa.get(1);
+
         int[] a = ArrayUtil.sortedArray;
         System.out.println(System.currentTimeMillis() + " - Binary Search");
         int res = binarySearch(a, -7, 0, a.length - 1);
@@ -56,3 +64,69 @@ public class BinarySearch {
     }
     // TODO: Length even/odd-> before first, after last, mid, random mid left, mid right,
 }
+
+/*
+ * ================================================================================
+ * COMPLEXITY ANALYSIS - BINARY SEARCH (Recursive Implementation)
+ * ================================================================================
+ *
+ * OPERATION         | TIME COMPLEXITY | SPACE COMPLEXITY | NOTES
+ * ------------------|-----------------|------------------|------------------------
+ * Best Case         | O(1)            | O(1)             | Element at middle position
+ * Average Case      | O(log n)        | O(log n)         | Recursive call stack
+ * Worst Case        | O(log n)        | O(log n)         | Element at end or not found
+ *
+ * Where n = number of elements in sorted array
+ *
+ * RECURRENCE RELATION: T(n) = T(n/2) + O(1)
+ * - Each step divides search space in half
+ * - Log₂(n) divisions until single element remains
+ *
+ * SPACE COMPLEXITY BREAKDOWN:
+ * - Recursive: O(log n) due to call stack (each recursive call adds stack frame)
+ * - Iterative: O(1) space (no recursion, just variables)
+ *
+ * PREREQUISITES:
+ * - Array MUST be sorted (ascending or descending)
+ * - Random access required (array, not linked list)
+ *
+ * CHARACTERISTICS:
+ * - Divide and conquer algorithm
+ * - Eliminates half of remaining elements each step
+ * - Much faster than linear search for large datasets
+ *
+ * ADVANTAGES:
+ * - Very fast: O(log n) time complexity
+ * - Efficient for large sorted datasets
+ * - Predictable performance
+ * - Better than linear search when n > 10-20 elements
+ *
+ * DISADVANTAGES:
+ * - Requires sorted array (sorting cost: O(n log n))
+ * - Requires random access (not good for linked lists)
+ * - More complex to implement than linear search
+ * - Recursive version uses O(log n) stack space
+ *
+ * COMPARISON WITH LINEAR SEARCH:
+ * Array Size    | Linear Search | Binary Search | Difference
+ * --------------|---------------|---------------|------------
+ * 10            | 10 ops        | 4 ops         | 2.5x faster
+ * 100           | 100 ops       | 7 ops         | 14x faster
+ * 1,000         | 1,000 ops     | 10 ops        | 100x faster
+ * 1,000,000     | 1M ops        | 20 ops        | 50,000x faster!
+ *
+ * BEST USE CASES:
+ * - Large sorted datasets
+ * - Repeated searches on same data
+ * - Dictionary lookups
+ * - Database indexing
+ * - Finding boundaries (first/last occurrence)
+ *
+ * WHEN TO AVOID:
+ * - Unsorted data (sort first or use linear search)
+ * - Small datasets (n < 10, linear is simpler)
+ * - Linked lists (no random access)
+ * - Frequently changing data (re-sorting expensive)
+ *
+ * ================================================================================
+ */
