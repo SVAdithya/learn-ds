@@ -3,17 +3,8 @@ package com.ds.java.tree;
 public class TreeTry {
     static Node root ;
     public static void main(String[] args) {
-        root = insert(root, 2);
-        root = insert(root, 4);
-        root = insert(root, 3);
-        root = insert(root, 9);
-        root = insert(root, 8);
-        root = insert(root, 6);
-        root = insert(root, 7);
-        root = insert(root, 5);
-        root = insert(root, 11);
-        root = insert(root, 10);
-        root = insert(root, 13);
+        root = insertBulk(root, 50,40,70,30,45,60,80,55,65,75,90,54,56,63,66,74,76,89,91);
+
         printRootToLeaftPaths(root, "");
         delete(root,4);
         printRootToLeaftPaths(root, "");
@@ -29,6 +20,31 @@ public class TreeTry {
         System.out.println("\n Height of the tree: " + maxDepth(root));
         System.out.println("Root to Leaf paths:");
         printRootToLeaftPaths(root, "");
+
+        Node n = leftRotate(root);
+        printRootToLeaftPaths(n, "");
+    }
+
+    public static Node leftRotate (Node y) {
+        Node x = y.right;
+        Node T2 = x.left;
+
+        // Perform rotation
+        x.left =  y;
+        y.right = T2;
+
+        return x;
+    }
+
+    public static Node rightRotate (Node x) {
+        Node y = x.left;
+        Node T2 = y.right;
+
+        // Perform rotation
+        y.right =  x;
+        x.left = T2;
+
+        return y;
     }
     public static Node delete(Node node, int data) {
         if (node == null) {
@@ -60,39 +76,46 @@ public class TreeTry {
         return node;
     }
 
-    public static Node insert(Node root, int data) {
-        if (root == null) {
+    public static Node insertBulk(Node node, int ...values) {
+        for (int value : values) {
+            node = insert(node, value);
+        }
+        return node;
+    }
+
+    public static Node insert(Node node, int data) {
+        if (node == null) {
             return new Node(data);
         }
-        if (data < root.data) {
-            root.left = insert(root.left, data);
+        if (data < node.data) {
+            node.left = insert(node.left, data);
         } else {
-            root.right = insert(root.right, data);
+            node.right = insert(node.right, data);
         }
-        return root;
+        return node;
     }
 
-    public static void inOrder(Node root) {
-        if (root != null) {
-            inOrder(root.left);
-            System.out.print(root.data + " ");
-            inOrder(root.right);
-        }
-    }
-
-    public static void preOrder(Node root) {
-        if (root != null) {
-            System.out.print(root.data + " ");
-            preOrder(root.left);
-            preOrder(root.right);
+    public static void inOrder(Node node) {
+        if (node != null) {
+            inOrder(node.left);
+            System.out.print(node.data + " ");
+            inOrder(node.right);
         }
     }
 
-    public static void postOrder(Node root) {
-        if (root != null) {
-            postOrder(root.left);
-            postOrder(root.right);
-            System.out.print(root.data + " ");
+    public static void preOrder(Node node) {
+        if (node != null) {
+            System.out.print(node.data + " ");
+            preOrder(node.left);
+            preOrder(node.right);
+        }
+    }
+
+    public static void postOrder(Node node) {
+        if (node != null) {
+            postOrder(node.left);
+            postOrder(node.right);
+            System.out.print(node.data + " ");
         }
     }
 
@@ -106,16 +129,16 @@ public class TreeTry {
         }
     }
 
-    public static void printRootToLeaftPaths(Node root, String path) {
-        if (root == null) {
+    public static void printRootToLeaftPaths(Node node, String path) {
+        if (node == null) {
             return;
         } else {
-            path += root.data;
-            if (root.left == null && root.right == null) {
+            path += node.data;
+            if (node.left == null && node.right == null) {
                 System.out.println(path);
             } else {
-                printRootToLeaftPaths(root.left, path+"-L-");
-                printRootToLeaftPaths(root.right, path+"-R-");
+                printRootToLeaftPaths(node.left, path+"-L-");
+                printRootToLeaftPaths(node.right, path+"-R-");
             }
         }
     }
